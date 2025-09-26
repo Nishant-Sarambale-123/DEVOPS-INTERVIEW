@@ -246,7 +246,6 @@ DEPLOY_TO_K8S:
 
 # ✅ Final Clean Workflow YAML
 
-```yaml
 name: Hprofile Actions
 
 on:
@@ -311,6 +310,9 @@ jobs:
           sed -i "s/^jdbc.password.*$/jdbc.password=${{ secrets.RDS_PASS }}/" src/main/resources/application.properties
           sed -i "s/db01/${{ secrets.RDS_ENDPOINT }}/" src/main/resources/application.properties
 
+      - name: Build Java Artifact
+        run: mvn clean package -DskipTests
+
       - name: Build & Upload image to ECR
         uses: appleboy/docker-ecr-action@master
         with:
@@ -344,8 +346,6 @@ jobs:
           git config user.email "actions@github.com"
           git commit -am "Update image tag to run ${{ github.run_number }}"
           git push origin main
-```
 
----
 
 Do you want me to also create a **diagram (CI/CD flow)** for this so you can quickly explain in interviews?
