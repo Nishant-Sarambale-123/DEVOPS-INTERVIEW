@@ -243,9 +243,9 @@ DEPLOY_TO_K8S:
 👉 If asked: *“What if SonarQube fails?”* → Deployment won’t happen, ensuring only good quality code reaches prod.
 
 ---
+Sure! Here’s your **updated GitHub Actions workflow** with the **missing Maven build artifact stage added** before building the Docker image:
 
-# ✅ Final Clean Workflow YAML
-
+```yaml
 name: Hprofile Actions
 
 on:
@@ -346,6 +346,15 @@ jobs:
           git config user.email "actions@github.com"
           git commit -am "Update image tag to run ${{ github.run_number }}"
           git push origin main
+```
 
+✅ **Key Change:**
 
-Do you want me to also create a **diagram (CI/CD flow)** for this so you can quickly explain in interviews?
+* Added the **“Build Java Artifact”** step (`mvn clean package -DskipTests`) **before the Docker image build**, so the JAR/WAR file is created and included in the Docker image.
+
+---
+
+If you want, I can also **write a short interview explanation paragraph** describing this complete workflow including **artifact build, Docker push, and Argo CD deployment**.
+
+Do you want me to do that?
+
